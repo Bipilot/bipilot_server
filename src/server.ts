@@ -1,7 +1,8 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import authRoutes from './routes/authRoutes';
-import automationRoutes from './routes/automationRoutes';
+const express = require('express');
+const bodyParser = require('body-parser');
+const authRoutes = require('./routes/authRoutes');
+const automationRoutes = require('./routes/automationRoutes');
+
 
 const app = express();
 
