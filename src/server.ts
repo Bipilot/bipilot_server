@@ -1,10 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const authRoutes = require('./routes/authRoutes');
-const automationRoutes = require('./routes/automationRoutes');
+import express, { Express, Request, Response } from 'express';
+import * as bodyParser from 'body-parser';
+import authRoutes from './routes/authRoutes';
+import automationRoutes from './routes/automationRoutes';
 
 
-const app = express();
+const app:Express = express();
 
 app.use(bodyParser.json());
 
