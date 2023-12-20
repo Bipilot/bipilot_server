@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import authRoutes from './routes/authRoutes';
 import automationRoutes from './routes/automationRoutes';
+import webhooks from './routes/automationRoutes';
 
 
 const app:Express = express();
@@ -10,6 +11,10 @@ app.use(bodyParser.json());
 
 app.use('/auth', authRoutes);
 app.use('/automation', automationRoutes);
+app.use('/webhooks', webhooks)
+app.get('/', (req, res)=>{
+  res.send("Nothing is here!")
+})
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

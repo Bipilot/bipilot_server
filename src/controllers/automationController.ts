@@ -5,4 +5,8 @@ export class AutomationController {
     // Handle automation logic here
     res.send('Automation logic here');
   }
+
+  public bindWebhooks(req: Request, res: Response): void {
+    res.send('Webhooks is herer!');
+  }
 }
