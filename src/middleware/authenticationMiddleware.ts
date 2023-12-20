@@ -11,4 +11,15 @@ export class AuthMiddleware {
       res.status(401).send('Not authenticated');
     }
   }
+
+  public isVerifiedWebhook(req: Request, res: Response, next: NextFunction): void {
+    const challenge = req.query['hub.challenge'];
+    const verify_token = req.query['hub.verify_token'];
+
+    if (verify_token === process.env.FACEBOOK_VERIFICATION_TOKEN) {
+      next()
+    } else {
+      res.status(400).send({ message: "Bad request!" });
+    }
+  }
 }

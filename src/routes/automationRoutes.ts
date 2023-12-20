@@ -7,6 +7,6 @@ const controller = new AutomationController();
 const authMiddleware = new AuthMiddleware();
 
 router.post('/run', authMiddleware.isAuthenticated, controller.runAutomation);
-router.get('/bind', controller.bindWebhooks);
+router.get('/bind', authMiddleware.isAuthenticated, controller.bindWebhooks);
 
 export default router;
