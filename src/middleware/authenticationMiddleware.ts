@@ -13,10 +13,8 @@ export class AuthMiddleware {
   }
 
   public isVerifiedWebhook(req: Request, res: Response, next: NextFunction): void {
-    const challenge = req.query['hub.challenge'];
     const verify_token = req.query['hub.verify_token'];
-
-    if (verify_token === process.env.FACEBOOK_VERIFICATION_TOKEN) {
+    if (verify_token === "TEST_IG") { //process.env.FACEBOOK_VERIFICATION_TOKEN
       next()
     } else {
       res.status(400).send({ message: "Bad request!" });
