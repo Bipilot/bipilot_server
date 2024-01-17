@@ -1,0 +1,228 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "REST API for Bipiot",
+    "version": "1.0.0"
+  },
+  "schemes": ["http"],
+  "servers": [{ "url": "http://localhost:3000/" }],
+  "paths": {
+    "/example": {
+      "post": {
+        "tags": ["ExampleEndpoints"],
+        "summary": "Send a text to the server",
+        "description": "Send a message to the server and get a response added to the original text",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExampleSchemaHeader"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExampleSchemaBody"
+                }
+              }
+            }
+          },
+          "404": { "description": "Not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/getLiveLongToken": {
+      "post": {
+        "tags": ["InstaEndpoints"],
+        "summary": "Get live long token",
+        "description": "Get live long token from Facebook API",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FbExchangeTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FbExchangeTokenResponse"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/getInstaProfileDetail": {
+      "post": {
+        "tags": ["InstaEndpoints"],
+        "summary": "Get Instagram profile details",
+        "description": "Get Instagram profile details using the provided access token",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstaProfileRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstaProfileResponse"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/getPostDetail": {
+      "post": {
+        "tags": ["InstaEndpoints"],
+        "summary": "Get Instagram post details",
+        "description": "Get details of Instagram posts using the provided access token and Instagram account ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstaPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstaPostResponse"
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+
+      "FbExchangeTokenRequest": {
+        "required": ["fb_exchange_token"],
+        "properties": {
+          "fb_exchange_token": {
+            "type": "string",
+            "example": "your_facebook_exchange_token_here"
+          }
+        }
+      },
+      "FbExchangeTokenResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+            }
+          }
+        }
+      },
+      
+      "InstaProfileRequest": {
+        "required": ["access_token"],
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "example": "your_instagram_access_token_here"
+          }
+        }
+      },
+      "InstaProfileResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+            }
+          }
+        }
+      },
+      
+      "InstaPostRequest": {
+        "required": ["access_token", "instagramAccountId"],
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "example": "your_instagram_access_token_here"
+          },
+          "instagramAccountId": {
+            "type": "string",
+            "example": "your_instagram_account_id_here"
+          }
+        }
+      },
+      "InstaPostResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,23 +1,30 @@
 import { Request, Response, NextFunction } from 'express';
+import Jwt from "jsonwebtoken";
+
 
 export class AuthMiddleware {
-  public isAuthenticated(req: Request, res: Response, next: NextFunction): void {
+  public isAuthenticated(req: Request, res: Response, next: NextFunction) {
     // Here you would check the authentication status
-    const authenticated = true; // Replace with actual authentication check
-
-    if (authenticated) {
+    // const token: any = req.header('Authorization');
+    // if (!token) {
+    //   return res.status(401).json({ error: 'Access denied' });
+    // }
+    try {
+      // const secret: any = process.env.JWT_SECRET;
+      // const decoded: any = Jwt.verify(token, secret);
+      // req.query.access_token = decoded.access_token;
       next();
-    } else {
-      res.status(401).send('Not authenticated');
+    } catch (error) {
+      return res.status(401).json({ error: 'Invalid token' });
     }
   }
 
-  public isVerifiedWebhook(req: Request, res: Response, next: NextFunction): void {
+  public isVerifiedWebhook(req: Request, res: Response, next: NextFunction) {
     const verify_token = req.query['hub.verify_token'];
-    if (verify_token === "TEST_IG") { //process.env.FACEBOOK_VERIFICATION_TOKEN
+    if (verify_token === process.env.FB_WEBHOOKS_VERIFICATION_TOKEN) {
       next()
     } else {
-      res.status(400).send({ message: "Bad request!" });
+      return res.status(400).send({ message: "Bad request!" });
     }
   }
 }
